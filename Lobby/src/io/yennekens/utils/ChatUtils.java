@@ -1,6 +1,9 @@
 package io.yennekens.utils;
 
+import io.yennekens.Lobby;
 import org.bukkit.entity.Player;
+
+import javax.persistence.Lob;
 
 public class ChatUtils {
 
@@ -10,6 +13,10 @@ public class ChatUtils {
     }
 
 
+
+    public static void sendPlayerMessage(Player player, String message) {
+        player.sendMessage(format(Lobby.prefix + message));
+    }
 
     public static void resetPlayerChat(Player player) {
 

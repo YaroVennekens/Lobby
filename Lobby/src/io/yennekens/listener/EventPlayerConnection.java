@@ -10,17 +10,15 @@ import static io.yennekens.utils.ChatUtils.resetPlayerChat;
 import static io.yennekens.utils.PlayerUtils.*;
 
 public class EventPlayerConnection implements Listener {
-
-
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
-        Player player = event.getPlayer();
 
+        Player player = event.getPlayer();
+        resetPlayer(player);
         givePlayerLobbySelector(player);
         resetPlayerChat(player);
-
-        resetPlayer(player);
         teleportPlayerSpawn(player);
+
     }
 
 }
