@@ -11,8 +11,8 @@ public class PlayerUtils {
 
     public static void givePlayerLobbySelector(Player player){
 
-        player.getInventory().addItem(new LobbySelector(Lobby.getServerManager()).LobbySelector());
-
+        player.getInventory().setItem(4, new LobbySelector(Lobby.getServerManager()).LobbySelector());
+player.getInventory().setHeldItemSlot(4);
     }
     public static void teleportPlayerSpawn(Player player){
         World world = Bukkit.getServer().getWorld("world");

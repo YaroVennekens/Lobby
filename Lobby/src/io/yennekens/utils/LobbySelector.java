@@ -51,25 +51,34 @@ public class LobbySelector {
             String serverStatus;
 
             if (playerCount != null) {
-                serverStatus = "§7Online: §a" + playerCount + " spelers";
+                serverStatus = "§a" + playerCount + " spelers";
             } else {
                 serverStatus = "§7Server is offline";
             }
 
             ItemStack item = server.getIcon();
             ItemMeta meta = item.getItemMeta();
-            meta.setDisplayName("§a" + server.getServerName());
-            ArrayList<String> lore = new ArrayList<>();
 
+
+            meta.addItemFlags(org.bukkit.inventory.ItemFlag.HIDE_ENCHANTS);
+            meta.addItemFlags(org.bukkit.inventory.ItemFlag.HIDE_ATTRIBUTES);
+
+
+            meta.setDisplayName("§a" + server.getServerName().toUpperCase());
+            ArrayList<String> lore = new ArrayList<>();
             lore.add(" ");
             String description = server.getDescription();
-            lore.addAll(splitDescription((description)));
+            lore.addAll(splitDescription(description));
             lore.add(" ");
             lore.add(serverStatus);
             meta.setLore(lore);
+
             item.setItemMeta(meta);
 
-            inv.setItem(slot, item);
+            if (!(serverName.contains("lobby"))) {
+                inv.setItem(slot, item);
+            }
+
             slot++;
             if (slot >= 9) break;
         }
@@ -83,23 +92,32 @@ public class LobbySelector {
 
         String[] words = description.split(" ");
         StringBuilder line = new StringBuilder();
+        boolean isFirstLine = true;
 
         for (int i = 0; i < words.length; i++) {
             String word = words[i];
 
             if (line.length() + word.length() + 1 <= 25) {
-
                 if (line.length() > 0) line.append(" ");
                 line.append(word);
             } else {
 
-                lines.add(line.toString());
+                if (!isFirstLine) {
+                    lines.add(ChatUtils.format("&6▪ " + line.toString()));
+                } else {
+                    lines.add(line.toString());
+                    isFirstLine = false;
+                }
                 line = new StringBuilder(word);
             }
 
 
             if (i == words.length - 1) {
-                lines.add(line.toString());
+                if (!isFirstLine) {
+                    lines.add(ChatUtils.format("&6▪ " + line.toString()));
+                } else {
+                    lines.add(line.toString());
+                }
             }
         }
 

@@ -1,5 +1,6 @@
 package io.yennekens;
 
+import io.yennekens.listener.EventPlayerBuild;
 import io.yennekens.listener.EventPlayerChatEvent;
 import io.yennekens.listener.EventPlayerConnection;
 import io.yennekens.listener.lobbySelector.LobbySelectorListener;
@@ -50,6 +51,7 @@ public class Lobby extends JavaPlugin implements Listener {
         pluginManager.registerEvents(new EventPlayerConnection(), this);
         pluginManager.registerEvents(new EventPlayerChatEvent(), this);
         pluginManager.registerEvents(new LobbySelectorListener(), this);
+        pluginManager.registerEvents(new EventPlayerBuild(), this);
     }
 
     public static Lobby getInstance() {
