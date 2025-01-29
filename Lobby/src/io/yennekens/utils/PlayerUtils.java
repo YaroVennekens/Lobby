@@ -1,5 +1,6 @@
 package io.yennekens.utils;
 
+import io.yennekens.Lobby;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.World;
@@ -10,7 +11,7 @@ public class PlayerUtils {
 
     public static void givePlayerLobbySelector(Player player){
 
-        player.getInventory().addItem(new LobbySelector().LobbySelector());
+        player.getInventory().addItem(new LobbySelector(Lobby.getServerManager()).LobbySelector());
 
     }
     public static void teleportPlayerSpawn(Player player){
