@@ -8,5 +8,7 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="minecraft_server" level="project" />
+    <orderEntry type="library" name="minecraft_server" level="project" />
+    <orderEntry type="library" name="Core" level="project" />
   </component>
 </module>

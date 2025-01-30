@@ -1,8 +1,8 @@
 package io.yennekens.utils;
 
+import io.yennekens.Core;
 import io.yennekens.Lobby;
-import io.yennekens.manager.ServerManager;
-import io.yennekens.model.Server;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -15,7 +15,7 @@ import java.util.*;
 public class BungeeCordUtils {
     private static List<String> serverList = new ArrayList<>();
     private static Map<String, Integer> serverPlayerCounts = new HashMap<>();
-    private static ServerManager serverManager = Lobby.getServerManager();
+
 
     public static void initialize() {
         Bukkit.getServer().getMessenger().registerOutgoingPluginChannel(Lobby.getInstance(), "BungeeCord");
@@ -86,11 +86,11 @@ public class BungeeCordUtils {
     private static void addServersToDatabase(List<String> servers) {
         for (String serverName : servers) {
 
-            if (serverManager.getServerByName(serverName) == null) {
+            if (Core.getInstance().getServerManager().getServerByName(serverName) == null) {
 
                 String description = "Je moet de beschrijving nog aanpassen " + serverName;
                 ItemStack icon = new ItemStack(Material.DIAMOND);
-                serverManager.addServer(serverName, description, icon);
+                Core.getInstance().getServerManager().addServer(serverName, description, icon);
 
             }
         }

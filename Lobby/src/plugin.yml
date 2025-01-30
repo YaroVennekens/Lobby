@@ -2,3 +2,4 @@ name: Lobby
 version: 1.0
 main: io.yennekens.Lobby
 commands:
+depend: [Core]

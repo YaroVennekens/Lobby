@@ -1,6 +1,7 @@
 package io.yennekens.utils;
 
-import io.yennekens.manager.ServerManager;
+
+import io.yennekens.Core;
 import io.yennekens.model.Server;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -18,11 +19,6 @@ public class LobbySelector {
     public String LOBBY_SELECTOR_ITEM_LORE_NAME = ChatUtils.format("&eKies een server!");
     public String LOBBY_SELECTOR_UI_TITLE = ChatUtils.format("&eSelecteer een server");
 
-    private final ServerManager serverManager;
-
-    public LobbySelector(ServerManager serverManager) {
-        this.serverManager = serverManager;
-    }
 
     public ItemStack LobbySelector() {
         ItemStack lobbySelector = LOBBY_SELECTOR_ITEM;
@@ -36,22 +32,22 @@ public class LobbySelector {
     }
 
     public Inventory lobbySelectorUI(Player player) {
-        List<String> serverNames = BungeeCordUtils.getServers();
+
         Inventory inv = Bukkit.createInventory(null, 9, LOBBY_SELECTOR_UI_TITLE);
 
         int slot = 0;
-        for (String serverName : serverNames) {
-            Server server = serverManager.getServerByName(serverName);
+        for (Server server : Core.getInstance().getServerManager().getAllServers()) {
+
 
             if (server == null) {
                 continue;
             }
 
-            Integer playerCount = BungeeCordUtils.getServerPlayerCounts().get(serverName);
+            Integer playerCount = BungeeCordUtils.getServerPlayerCounts().get(server.getServerName());
             String serverStatus;
 
             if (playerCount != null) {
-                serverStatus = "§a" + playerCount + " spelers";
+                serverStatus = "§6§l" + playerCount + " §espelers";
             } else {
                 serverStatus = "§7Server is offline";
             }
@@ -64,18 +60,20 @@ public class LobbySelector {
             meta.addItemFlags(org.bukkit.inventory.ItemFlag.HIDE_ATTRIBUTES);
 
 
-            meta.setDisplayName("§a" + server.getServerName().toUpperCase());
+            meta.setDisplayName("§6§l" + server.getServerName().toUpperCase());
             ArrayList<String> lore = new ArrayList<>();
             lore.add(" ");
             String description = server.getDescription();
             lore.addAll(splitDescription(description));
             lore.add(" ");
             lore.add(serverStatus);
+            lore.add(" ");
+            lore.add(ChatUtils.format("&6&lKlik om te joinen"));
             meta.setLore(lore);
 
             item.setItemMeta(meta);
 
-            if (!(serverName.contains("lobby"))) {
+            if (!(server.getServerName().contains("lobby"))) {
                 inv.setItem(slot, item);
             }
 
@@ -103,7 +101,7 @@ public class LobbySelector {
             } else {
 
                 if (!isFirstLine) {
-                    lines.add(ChatUtils.format("&6▪ " + line.toString()));
+                    lines.add(ChatUtils.format("&e" + line.toString()));
                 } else {
                     lines.add(line.toString());
                     isFirstLine = false;
@@ -114,7 +112,7 @@ public class LobbySelector {
 
             if (i == words.length - 1) {
                 if (!isFirstLine) {
-                    lines.add(ChatUtils.format("&6▪ " + line.toString()));
+                    lines.add(ChatUtils.format("&e" + line.toString()));
                 } else {
                     lines.add(line.toString());
                 }
